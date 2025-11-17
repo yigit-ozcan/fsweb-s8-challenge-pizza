@@ -4,7 +4,7 @@ const Success = () => {
 
     const location = useLocation();
     const data = location.state;
-    
+
     return (
         <div>
             <h1>TEBRİKLER! SİPARİŞİNİZ ALINDI!</h1>

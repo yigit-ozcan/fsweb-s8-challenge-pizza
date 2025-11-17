@@ -1,6 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const OrderPage = () => {
     const [boyut, setBoyut] = useState("");
@@ -26,7 +27,7 @@ const OrderPage = () => {
         adet: adet
         }
 
-        axios.post("https://reqres.in/api/pizza", siparis)
+        axios.post("https://jsonplaceholder.typicode.com/posts", siparis)
             .then(response => {
                 console.log(response.data)
                 navigate("/success", { state: response.data })
@@ -58,7 +59,7 @@ const OrderPage = () => {
     }
 
     const handleAdet = (event) => {
-        setAdet(event.target.value);
+        setAdet(Number(event.target.value));
     }
 
     const SECENEKLER = [

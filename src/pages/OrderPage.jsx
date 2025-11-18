@@ -1,170 +1,238 @@
-import {useState} from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+
+import {
+  PageContainer,
+  PageWrapper,
+  HeaderBar,
+  ProductBox,
+  FormCard,
+  Section,
+  SectionRow,
+  Title,
+  OptionGroup,
+  SelectBox,
+  InfoText,
+  CheckboxGrid,
+  InputBox,
+  TextArea,
+  SubmitButton,
+  QuantityWrapper,
+  QuantityButton,
+  QuantityValue,
+  SummaryCard,
+  SummaryRow,
+  SummaryLabel,
+  SummaryValue,
+} from "./OrderPage.styles";
 
 const OrderPage = () => {
-    const [boyut, setBoyut] = useState("");
-    const [hamur, setHamur] = useState("");
-    const [malzemeler, setMalzemeler] = useState([]); 
-    const [isim, setIsim] = useState("");
-    const [not, setNot] = useState("");
-    const [adet, setAdet] = useState(1);
+  const [boyut, setBoyut] = useState("");
+  const [hamur, setHamur] = useState("");
+  const [malzemeler, setMalzemeler] = useState([]);
+  const [isim, setIsim] = useState("");
+  const [not, setNot] = useState("");
+  const [adet, setAdet] = useState(1);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+  const SECENEKLER = [
+    "Pepperoni", "Sosis", "Kanada Jambonu", "Tavuk Izgara", "Soğan",
+    "Domates", "Mısır", "Sucuk", "Jalepeno", "Sarımsak",
+    "Biber", "Ananas", "Kabak",
+  ];
 
-        if (!isValidForm) return;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isValidForm) return;
 
-        const siparis = {
-        isim: isim,
-        boyut: boyut,
-        hamur: hamur,
-        malzemeler: malzemeler,
-        not: not,
-        adet: adet
-        }
+    const siparis = { isim, boyut, hamur, malzemeler, not, adet };
 
-        axios.post("https://jsonplaceholder.typicode.com/posts", siparis)
-            .then(response => {
-                console.log(response.data)
-                navigate("/success", { state: response.data })
-            })
-            .catch(error => console.log(error))
-    }
+    axios
+      .post("https://jsonplaceholder.typicode.com/posts", siparis)
+      .then((res) => navigate("/success", { state: res.data }))
+      .catch((err) => console.log(err));
+  };
 
-    const handleBoyut = (event) => {
-        setBoyut(event.target.value);
-    }
+  const handleMalzemeler = (e) => {
+    const value = e.target.value;
 
-    const handleHamur = (event) => {
-        setHamur(event.target.value);
-    }
+    malzemeler.includes(value)
+      ? setMalzemeler(malzemeler.filter((x) => x !== value))
+      : setMalzemeler([...malzemeler, value]);
+  };
 
-    const handleMalzemeler = (event) => {
-        const {value} = event.target;
-        malzemeler.includes(value) 
-            ? setMalzemeler(malzemeler.filter((item) => item !== value)) 
-            : setMalzemeler([...malzemeler, value])
-    }
+  const isValidForm =
+    isim.trim().length >= 3 &&
+    boyut !== "" &&
+    hamur !== "" &&
+    malzemeler.length >= 4 &&
+    malzemeler.length <= 10 &&
+    adet > 0;
 
-    const handleIsim = (event) => {
-        setIsim(event.target.value);
-    }
+  return (
+    <PageContainer>
+      <PageWrapper>
+        <HeaderBar>
+          <div className="logo">Teknolojik Yemekler</div>
+        </HeaderBar>
 
-    const handleNot = (event) => {
-        setNot(event.target.value);
-    }
+        {/* ÜRÜN BİLGİ KUTUSU */}
+        <ProductBox>
+          <h2>Position Absolute Acı Pizza</h2>
 
-    const handleAdet = (event) => {
-        setAdet(Number(event.target.value));
-    }
+          <div className="info-row">
+            <span className="price">85.50₺</span>
 
-    const SECENEKLER = [
-        "Pepperoni",
-        "Sosis",
-        "Kanada Jambonu",
-        "Tavuk Izgara",
-        "Soğan",
-        "Domates",
-        "Mısır",
-        "Sucuk",
-        "Jalepeno",
-        "Sarımsak",
-        "Biber",
-        "Ananas",
-        "Kabak",
-    ];
+            <div className="rating-box">
+              <span>4.9</span>
+              <span>(200)</span>
+            </div>
+          </div>
 
-    const isValidForm = 
-        isim.trim().length >= 3 &&
-        boyut !== "" &&
-        hamur !== "" &&
-        malzemeler.length >= 4 &&
-        malzemeler.length <= 10 &&
-        adet > 0;
- 
-    return (
-        <form onSubmit={handleSubmit} >
-            <div>
-                <h3>Boyut Seç</h3>
-                <label htmlFor="boyut-kucuk">
-                    <input 
-                        id="boyut-kucuk" 
-                        name="boyut" 
-                        type="radio" 
-                        value="küçük" 
-                        onChange={handleBoyut} 
-                        checked={boyut === "küçük"}
-                    />
-                    Küçük
+          <p>
+            Frontend Dev olarak hala position:absolute kullanıyorsan bu çok acı pizza tam sana göre.
+            Pizza; domates, peynir ve genellikle çeşitli diğer malzemelerle kaplanmış,
+            daha sonra geleneksel olarak odun ateşinde bir fırında yüksek sıcaklıkta pişirilen,
+            genellikle yuvarlak, düzleştirilmiş mayalı buğday bazlı hamurdan oluşan İtalyan kökenli
+            lezzetli bir yemektir. Küçük bir pizzaya bazen pizzetta denir.
+          </p>
+        </ProductBox>
+
+        {/* FORM KART */}
+        <FormCard onSubmit={handleSubmit}>
+
+          {/* BOYUT + HAMUR YAN YANA */}
+          <SectionRow>
+            <Section>
+              <Title>Boyut Seç *</Title>
+              <OptionGroup>
+                <label>
+                  <input
+                    type="radio"
+                    name="boyut"
+                    value="Küçük"
+                    checked={boyut === "Küçük"}
+                    onChange={(e) => setBoyut(e.target.value)}
+                  /> Küçük
                 </label>
-                <label htmlFor="boyut-orta">
-                    <input 
-                        id="boyut-orta" 
-                        name="boyut" 
-                        type="radio" 
-                        value="orta" 
-                        onChange={handleBoyut} 
-                        checked={boyut === "orta"}
-                    />
-                    Orta
+
+                <label>
+                  <input
+                    type="radio"
+                    name="boyut"
+                    value="Orta"
+                    checked={boyut === "Orta"}
+                    onChange={(e) => setBoyut(e.target.value)}
+                  /> Orta
                 </label>
-                <label htmlFor="boyut-buyuk">
-                    <input 
-                        id="boyut-buyuk" 
-                        name="boyut" 
-                        type="radio" 
-                        value="büyük" 
-                        onChange={handleBoyut} 
-                        checked={boyut === "büyük"}
-                    />
-                    Büyük
+
+                <label>
+                  <input
+                    type="radio"
+                    name="boyut"
+                    value="Büyük"
+                    checked={boyut === "Büyük"}
+                    onChange={(e) => setBoyut(e.target.value)}
+                  /> Büyük
                 </label>
-            </div>
-            <div>
-                <h3>Hamur Seç</h3>
-                <select name="hamur" value={hamur} onChange={handleHamur}>
-                    <option value="">Hamur seçiniz</option>
-                    <option value="ince">İnce</option>
-                    <option value="orta">Orta</option>
-                    <option value="kalın">Kalın</option>
-                </select>
-            </div>
-            <div>
-                <h3>Ek Malzemeler</h3>
-                <p>En az 4, en fazla 10 adet seçmelisiniz.</p>
-                {SECENEKLER.map(madde => (
-                    <label key={madde} htmlFor={madde}>
-                        <input
-                        id={madde}
-                        type="checkbox"
-                        value={madde}
-                        onChange={handleMalzemeler}
-                        checked={malzemeler.includes(madde)}
-                    />
-                    {madde}
-                    </label>
-                ))}
-            </div>
-            <div>
-                <h3>İsim</h3>
-                <input type="text" value={isim} onChange={handleIsim}/>
-            </div>
-            <div>
-                <h3>Sipariş Notu</h3>
-                <textarea name="not" id="not" value={not} onChange={handleNot}></textarea>
-            </div>
-            <div>
-                <input type="number" name="adet" id="adet" value={adet} onChange={handleAdet}/>
-            </div>
-            <div>
-                <button type="submit" disabled={!isValidForm}>Sipariş ver</button>
-            </div>
-        </form>
-    );
-}
+              </OptionGroup>
+            </Section>
+
+            <Section>
+              <Title>Hamur Seç *</Title>
+              <SelectBox
+                value={hamur}
+                onChange={(e) => setHamur(e.target.value)}
+              >
+                <option value="">Hamur seçiniz</option>
+                <option value="ince">İnce</option>
+                <option value="orta">Orta</option>
+                <option value="kalın">Kalın</option>
+              </SelectBox>
+            </Section>
+          </SectionRow>
+
+          {/* MALZEMELER */}
+          <Section>
+            <Title>Ek Malzemeler</Title>
+            <InfoText>En az 4, en fazla 10 tane seçebilirsiniz.</InfoText>
+
+            <CheckboxGrid>
+              {SECENEKLER.map((item) => (
+                <label key={item}>
+                  <input
+                    type="checkbox"
+                    value={item}
+                    checked={malzemeler.includes(item)}
+                    onChange={handleMalzemeler}
+                  /> {item}
+                </label>
+              ))}
+            </CheckboxGrid>
+          </Section>
+
+          {/* İSİM (GİZLİ) */}
+          <Section style={{ display: "none" }}>
+            <InputBox
+              type="text"
+              value={isim}
+              onChange={(e) => setIsim(e.target.value)}
+            />
+          </Section>
+
+          {/* NOT */}
+          <Section>
+            <Title>Sipariş Notu</Title>
+            <TextArea
+              placeholder="Siparişine eklemek istediğin bir not var mı?"
+              value={not}
+              onChange={(e) => setNot(e.target.value)}
+            />
+          </Section>
+
+          {/* --- ADET + ÖZET --- */}
+          <SectionRow>
+
+            {/* ADET */}
+            <Section>
+              <QuantityWrapper>
+                <QuantityButton type="button" onClick={() => setAdet(Math.max(1, adet - 1))}>-</QuantityButton>
+                <QuantityValue>{adet}</QuantityValue>
+                <QuantityButton type="button" onClick={() => setAdet(adet + 1)}>+</QuantityButton>
+              </QuantityWrapper>
+            </Section>
+
+            {/* ÖZET KARTI */}
+            <SummaryCard>
+              <h3>Sipariş Toplamı</h3>
+
+              <SummaryRow>
+                <SummaryLabel>Seçimler</SummaryLabel>
+                <SummaryValue>25.00₺</SummaryValue>
+              </SummaryRow>
+
+              <SummaryRow isTotal>
+                <SummaryLabel>Toplam</SummaryLabel>
+                <SummaryValue isTotal>110.50₺</SummaryValue>
+              </SummaryRow>
+
+              <SubmitButton
+                disabled={!isValidForm}
+                type="submit"
+                style={{ marginTop: "12px", width: "100%" }}
+              >
+                SİPARİŞ VER
+              </SubmitButton>
+            </SummaryCard>
+
+          </SectionRow>
+
+        </FormCard>
+      </PageWrapper>
+    </PageContainer>
+  );
+};
 
 export default OrderPage;

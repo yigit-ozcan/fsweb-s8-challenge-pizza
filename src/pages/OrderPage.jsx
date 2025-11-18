@@ -22,6 +22,7 @@ import {
   QuantityButton,
   QuantityValue,
   SummaryCard,
+  SummaryContent,
   SummaryRow,
   SummaryLabel,
   SummaryValue,
@@ -51,7 +52,10 @@ const OrderPage = () => {
 
     axios
       .post("https://jsonplaceholder.typicode.com/posts", siparis)
-      .then((res) => navigate("/success", { state: res.data }))
+      .then((res) => {
+        console.log("Sipariş Yanıtı:", res.data);
+        navigate("/success", { state: res.data });
+      })
       .catch((err) => console.log(err));
   };
 
@@ -64,7 +68,6 @@ const OrderPage = () => {
   };
 
   const isValidForm =
-    isim.trim().length >= 3 &&
     boyut !== "" &&
     hamur !== "" &&
     malzemeler.length >= 4 &&
@@ -74,11 +77,17 @@ const OrderPage = () => {
   return (
     <PageContainer>
       <PageWrapper>
+
+        {/* ---- HEADER ---- */}
         <HeaderBar>
           <div className="logo">Teknolojik Yemekler</div>
+
+          <div className="breadcrumb">
+            <span>Anasayfa</span> &nbsp;-&nbsp; <strong>Sipariş Oluştur</strong>
+          </div>
         </HeaderBar>
 
-        {/* ÜRÜN BİLGİ KUTUSU */}
+        {/* ---- ÜRÜN BİLGİ ---- */}
         <ProductBox>
           <h2>Position Absolute Acı Pizza</h2>
 
@@ -100,13 +109,12 @@ const OrderPage = () => {
           </p>
         </ProductBox>
 
-        {/* FORM KART */}
+        {/* ---- FORM ---- */}
         <FormCard onSubmit={handleSubmit}>
 
-          {/* BOYUT + HAMUR YAN YANA */}
           <SectionRow>
             <Section>
-              <Title>Boyut Seç *</Title>
+              <Title>Boyut Seç <span>*</span></Title>
               <OptionGroup>
                 <label>
                   <input
@@ -141,11 +149,8 @@ const OrderPage = () => {
             </Section>
 
             <Section>
-              <Title>Hamur Seç *</Title>
-              <SelectBox
-                value={hamur}
-                onChange={(e) => setHamur(e.target.value)}
-              >
+              <Title>Hamur Seç <span>*</span></Title>
+              <SelectBox value={hamur} onChange={(e) => setHamur(e.target.value)}>
                 <option value="">Hamur seçiniz</option>
                 <option value="ince">İnce</option>
                 <option value="orta">Orta</option>
@@ -154,7 +159,6 @@ const OrderPage = () => {
             </Section>
           </SectionRow>
 
-          {/* MALZEMELER */}
           <Section>
             <Title>Ek Malzemeler</Title>
             <InfoText>En az 4, en fazla 10 tane seçebilirsiniz.</InfoText>
@@ -167,22 +171,17 @@ const OrderPage = () => {
                     value={item}
                     checked={malzemeler.includes(item)}
                     onChange={handleMalzemeler}
-                  /> {item}
+                  />{" "}
+                  {item}
                 </label>
               ))}
             </CheckboxGrid>
           </Section>
 
-          {/* İSİM (GİZLİ) */}
           <Section style={{ display: "none" }}>
-            <InputBox
-              type="text"
-              value={isim}
-              onChange={(e) => setIsim(e.target.value)}
-            />
+            <InputBox type="text" value={isim} onChange={(e) => setIsim(e.target.value)} />
           </Section>
 
-          {/* NOT */}
           <Section>
             <Title>Sipariş Notu</Title>
             <TextArea
@@ -192,10 +191,8 @@ const OrderPage = () => {
             />
           </Section>
 
-          {/* --- ADET + ÖZET --- */}
           <SectionRow>
 
-            {/* ADET */}
             <Section>
               <QuantityWrapper>
                 <QuantityButton type="button" onClick={() => setAdet(Math.max(1, adet - 1))}>-</QuantityButton>
@@ -204,25 +201,22 @@ const OrderPage = () => {
               </QuantityWrapper>
             </Section>
 
-            {/* ÖZET KARTI */}
             <SummaryCard>
-              <h3>Sipariş Toplamı</h3>
+              <SummaryContent>
+                <h3>Sipariş Toplamı</h3>
 
-              <SummaryRow>
-                <SummaryLabel>Seçimler</SummaryLabel>
-                <SummaryValue>25.00₺</SummaryValue>
-              </SummaryRow>
+                <SummaryRow>
+                  <SummaryLabel>Seçimler</SummaryLabel>
+                  <SummaryValue>25.00₺</SummaryValue>
+                </SummaryRow>
 
-              <SummaryRow isTotal>
-                <SummaryLabel>Toplam</SummaryLabel>
-                <SummaryValue isTotal>110.50₺</SummaryValue>
-              </SummaryRow>
+                <SummaryRow isTotal>
+                  <SummaryLabel isTotal>Toplam</SummaryLabel>
+                  <SummaryValue isTotal>110.50₺</SummaryValue>
+                </SummaryRow>
+              </SummaryContent>
 
-              <SubmitButton
-                disabled={!isValidForm}
-                type="submit"
-                style={{ marginTop: "12px", width: "100%" }}
-              >
+              <SubmitButton disabled={!isValidForm} type="submit">
                 SİPARİŞ VER
               </SubmitButton>
             </SummaryCard>

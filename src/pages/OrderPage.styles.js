@@ -6,18 +6,37 @@ export const HeaderBar = styled.div`
   background-color: #CE2829;
 
   display: flex;
-  justify-content: center;   /* yatay ortalama */
-  align-items: center;       /* dikey ortalama */
+  flex-direction: column;
+  justify-content: center;   
+  align-items: center;       
 
   .logo {
     color: white;
     font-size: 32px;
     font-weight: 700;
+    margin-top: 2rem;
+  }
+
+  .breadcrumb {
+    font-size: 14px;
+    color: #eee;
+    margin-right: 23rem;
+    margin-top: 3rem;
+
+    span {
+      color: #ddd;
+    }
+
+    strong {
+      color: white;
+      font-weight: 600;
+    }
   }
 `;
 
+
 export const PageContainer = styled.div`
-  width: 100vw;
+  width: 99.2vw;
   min-height: 100vh;
   background-color: white;
   display: flex;
@@ -28,6 +47,8 @@ export const PageContainer = styled.div`
 
 export const PageWrapper = styled.div`
   width: 100%;
+  margin-top: 0;
+  padding-top: 0;
 `;
 
 export const ProductBox = styled.div`
@@ -86,6 +107,10 @@ export const Section = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  p {
+    margin-top: 2rem;
+  }
 `;
 
 export const SectionRow = styled.div`
@@ -104,6 +129,10 @@ export const Title = styled.h3`
   font-weight: 700;
   margin: 0;
   color: #333;
+
+  span {
+    color:  #CE2829;
+  }
 `;
 
 export const InfoText = styled.p`
@@ -166,7 +195,7 @@ export const SubmitButton = styled.button`
   width: 100%;
   padding: 14px;
   border: none;
-  border-radius: 6px;
+  border-radius: 0 0 6px 6px; 
   font-weight: bold;
   font-size: 16px;
   background-color: #fdc913;
@@ -187,7 +216,7 @@ export const SubmitButton = styled.button`
 export const QuantityWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
   margin: 12px 0;
 `;
 
@@ -213,23 +242,34 @@ export const QuantityButton = styled.button`
 `;
 
 export const QuantityValue = styled.span`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   min-width: 28px;
+  width: 36px;
+  height: 36px;
   text-align: center;
   color: #333;
 `;
 
 
-/* 🔥 SİPARİŞ ÖZETİ KARTI */
+/* SİPARİŞ ÖZETİ KARTI */
 export const SummaryCard = styled.div`
   background: #fff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 6px;
   border: 1px solid #eee;
+  overflow: hidden;
   width: 100%;
+
+  h3 {
+    margin-bottom: 2rem;
+  }
 `;
+
+export const SummaryContent = styled.div`
+  padding: 24px;
+  padding-bottom: 0;  /* butonla birleşmesi için */
+`;
+
 
 export const SummaryRow = styled.div`
   display: flex;
@@ -242,6 +282,8 @@ export const SummaryRow = styled.div`
 export const SummaryLabel = styled.span`
   font-size: 13px;
   color: #555;
+  font-weight: ${(props) => (props.isTotal ? "700" : "500")};
+  color: ${(props) => (props.isTotal ? "#ce2829" : "#292929")};
 `;
 
 export const SummaryValue = styled.span`

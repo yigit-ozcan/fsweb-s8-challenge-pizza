@@ -1,4 +1,6 @@
 import { useLocation } from "react-router-dom";
+import { PageContainer } from "./Success.styles";
+import { HeaderBar } from "./Success.styles";
 
 const Success = () => {
 
@@ -6,9 +8,12 @@ const Success = () => {
     const data = location.state;
 
     return (
-        <div>
-            <h1>TEBRİKLER! SİPARİŞİNİZ ALINDI!</h1>
-        </div>
+        <PageContainer>
+            <HeaderBar>
+                <h1>Teknolojik Yemekler</h1>
+                <p>TEBRİKLER! SİPARİŞİNİZ ALINDI!</p>
+            </HeaderBar>
+        </PageContainer>
     );
 }
 

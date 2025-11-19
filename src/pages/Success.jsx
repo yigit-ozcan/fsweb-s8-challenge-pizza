@@ -1,4 +1,4 @@
-import { PageContainer, HeaderBar, SuccessTitle, SuccessSub, SuccessLine, ContentBox, OrderInfo, OrderRow, SummaryCard, SummaryRow, FooterWrapper, FooterTop, FooterLeft, FooterInfoRow, FooterMiddle, FooterRight, FooterImages, FooterBottom } from "./Success.styles";
+import { PageContainer, HeaderBar, SuccessTitle, SuccessSub, SuccessLine, ContentBox, OrderInfo, OrderRow, SummaryCard, SummaryRow, FooterWrapper, FooterTop, FooterLeft, FooterInfoRow, FooterMiddle, FooterRight, FooterImages, FooterBottom, Mobile } from "./Success.styles";
 
 const Success = ({ finalOrder }) => {
   if (!finalOrder) {
@@ -113,6 +113,12 @@ const Success = ({ finalOrder }) => {
           <i className="fa-brands fa-twitter"></i>
         </FooterBottom>
       </FooterWrapper>
+      <Mobile>
+        <h1>Teknolojik Yemekler</h1>
+        <p>TEBRİKLER!</p>
+        <p>SİPARİŞİNİZ</p>
+        <p>ALINDI</p>
+      </Mobile>
 
     </PageContainer>
   );

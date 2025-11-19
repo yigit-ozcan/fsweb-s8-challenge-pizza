@@ -24,6 +24,10 @@ export const HeaderBar = styled.div`
     margin-bottom: 5rem;
     font-family: Londrina Solid, sans-serif;
   }
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const SuccessSub = styled.p`
@@ -54,6 +58,9 @@ export const SuccessLine = styled.div`
 export const ContentBox = styled.div`
   text-align: center;
   margin-top: 2rem;
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const OrderInfo = styled.div`
@@ -102,6 +109,10 @@ export const FooterWrapper = styled.footer`
   margin-bottom: 0rem;
   padding-top: 2rem;
   width: 100%;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const FooterTop = styled.div`
@@ -212,5 +223,38 @@ export const FooterBottom = styled.div`
   i {
     margin-right: 3rem;
     font-size: 1.5rem;
+  }
+`;
+
+export const Mobile = styled.div`
+  display: none;
+
+  @media (max-width: 1000px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* dikey ortala */
+    align-items: center;        /* yatay ortala */
+    
+    height: 100vh;             
+    width: 100%;
+    
+    background-color: #CE2829;
+
+    h1 {
+      font-family: "Londrina Solid";
+      font-size: 3rem;
+      margin-bottom: 12rem;
+      text-align: center;
+      color: white;
+    }
+
+    p {
+      font-family: "Roboto Condensed";
+      font-size: 6rem;
+      text-align: center;
+      color: white;
+      line-height: 1.2;
+      font-weight: 300;
+    }
   }
 `;

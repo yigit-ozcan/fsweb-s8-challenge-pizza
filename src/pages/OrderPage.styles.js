@@ -383,6 +383,10 @@ export const FooterWrapper = styled.footer`
   margin-top: 4rem;
   padding-top: 2rem;
   margin-bottom: 0;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const FooterTop = styled.div`

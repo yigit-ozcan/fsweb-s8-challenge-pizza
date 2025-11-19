@@ -8,6 +8,7 @@ export const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: 'Barlow', sans-serif;
 
   color: white;
 `;
@@ -18,16 +19,18 @@ export const HeaderBar = styled.div`
   text-align: center;
 
   h1 {
-    font-size: 2.3rem;
+    font-size: 3rem;
     font-weight: 700;
     margin-bottom: 5rem;
+    font-family: Londrina Solid, sans-serif;
   }
 `;
 
 export const SuccessSub = styled.p`
   color: #f6c85f;
-  font-size: 1.3rem;
+  font-size: 3rem;
   margin-top: 0.5rem;
+  font-family: Satisfy, sans-serif;
 `;
 
 export const SuccessTitle = styled.h2`
@@ -35,6 +38,7 @@ export const SuccessTitle = styled.h2`
   font-size: 6rem;
   font-weight: 300;
   wdith: 30rem;
+  font-family: Roboto Condensed, sans-serif;
 `;
 
 export const SuccessLine = styled.div`
@@ -116,6 +120,10 @@ export const FooterLeft = styled.div`
   img {
     width: 12rem;
   }
+
+  p {
+    font-family: 'Barlow', sans-serif;
+  }
 `;
 
 export const FooterInfoRow = styled.div`
@@ -130,6 +138,7 @@ export const FooterInfoRow = styled.div`
   p {
     color: white;
     font-size: 1.1rem;
+    font-family: 'Barlow', sans-serif;
   }
 `;
 
@@ -146,6 +155,7 @@ export const FooterMiddle = styled.div`
   p {
     color: white;
     transition: 0.3s;
+    font-family: 'Barlow', sans-serif;
 
     &:hover {
       color: #c5c5c5;
@@ -161,6 +171,7 @@ export const FooterRight = styled.div`
   h3 {
     color: white;
     font-size: 1.5rem;
+    font-family: 'Barlow', sans-serif;
   }
 `;
 
@@ -195,6 +206,7 @@ export const FooterBottom = styled.div`
 
   p {
     margin-left: 3rem;
+    font-family: 'Barlow', sans-serif;
   }
 
   i {

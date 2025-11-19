@@ -16,6 +16,7 @@ export const HeaderBar = styled.div`
     color: white;
     font-size: 32px;
     font-weight: 700;
+    font-family: 'Londrina Solid', cursive;
   }
 `;
 
@@ -26,6 +27,7 @@ export const PageContainer = styled.div`
   width: 99.1vw;     
   overflow-x: hidden;
   background-color: white;
+  font-family: 'Barlow', sans-serif;
 
   display: flex;
   justify-content: center;
@@ -69,6 +71,7 @@ export const ProductBox = styled.div`
   h2 {
     font-size: 20px;
     font-weight: 700;
+    font-family: 'Barlow', sans-serif;
   }
 
   .info-row {
@@ -398,6 +401,10 @@ export const FooterLeft = styled.div`
   img {
     width: 12rem;
   }
+
+  p {
+    font-family: 'Barlow', sans-serif;
+  }
 `;
 
 export const FooterInfoRow = styled.div`
@@ -412,6 +419,7 @@ export const FooterInfoRow = styled.div`
   p {
     color: white;
     font-size: 1.1rem;
+    font-family: 'Barlow', sans-serif;
   }
 `;
 
@@ -423,11 +431,13 @@ export const FooterMiddle = styled.div`
   h3 {
     color: white;
     font-size: 1.5rem;
+    font-family: 'Barlow', sans-serif;
   }
 
   p {
     color: white;
     transition: 0.3s;
+    font-family: 'Barlow', sans-serif;
 
     &:hover {
       color: #c5c5c5;
@@ -443,6 +453,7 @@ export const FooterRight = styled.div`
   h3 {
     color: white;
     font-size: 1.5rem;
+    font-family: 'Barlow', sans-serif;
   }
 `;
 
@@ -478,6 +489,7 @@ export const FooterBottom = styled.div`
 
   p {
     margin-left: 3rem;
+    font-family: 'Barlow', sans-serif;
   }
   
   i {

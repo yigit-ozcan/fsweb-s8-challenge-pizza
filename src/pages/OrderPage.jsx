@@ -50,7 +50,6 @@ const OrderPage = ({ handleOrder }) => {
 
   const navigate = useNavigate();
 
-  // ✅ FİYAT HESAPLAMA
   const hesaplaFiyat = () => {
     const BASE_PRICE = 85.50;
     const MALZEME_FIYATI = 5;
@@ -96,6 +95,7 @@ const OrderPage = ({ handleOrder }) => {
   };
 
   const isValidForm =
+    isim.trim().length >= 3 &&
     boyut !== "" &&
     hamur !== "" &&
     malzemeler.length >= 4 &&
@@ -209,6 +209,18 @@ const OrderPage = ({ handleOrder }) => {
                 </label>
               ))}
             </CheckboxGrid>
+          </Section>
+
+          <Section>
+            <Title>İsim</Title>
+            <InputBox
+              value={isim}
+              onChange={(e) => setIsim(e.target.value)}
+              placeholder="İsminizi girin"
+            />
+            {isim.length > 0 && isim.trim().length < 3 && (
+              <InfoText>İsim en az 3 karakter olmalıdır.</InfoText>
+            )}
           </Section>
 
           {/* NOT */}

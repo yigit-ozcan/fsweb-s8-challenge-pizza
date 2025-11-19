@@ -12,7 +12,6 @@ const Success = ({ finalOrder }) => {
     );
   }
 
-  // Örnek fiyatlar (orderPage’deki hesap mantığını tekrar kullandık)
   const secimUcreti = finalOrder.malzemeler.length * 5;
   const toplam = (85.5 + secimUcreti) * finalOrder.adet;
 
@@ -32,12 +31,20 @@ const Success = ({ finalOrder }) => {
         <h3>Position Absolute Acı Pizza</h3>
 
         <OrderInfo>
+
+          <OrderRow><strong>İsim:</strong> {finalOrder.isim}</OrderRow>
+
+          {finalOrder.not && (
+            <OrderRow><strong>Not:</strong> {finalOrder.not}</OrderRow>
+          )}
+
           <OrderRow><strong>Boyut:</strong> {finalOrder.boyut}</OrderRow>
           <OrderRow><strong>Hamur:</strong> {finalOrder.hamur}</OrderRow>
           <OrderRow>
             <strong>Ek Malzemeler:</strong> {finalOrder.malzemeler.join(", ")}
           </OrderRow>
           <OrderRow><strong>Adet:</strong> {finalOrder.adet}</OrderRow>
+
         </OrderInfo>
 
         {/* SUMMARY CARD */}

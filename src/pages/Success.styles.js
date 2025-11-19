@@ -1,31 +1,204 @@
 import styled from "styled-components";
 
 export const PageContainer = styled.div`
-  width: 100vw;
+  width: 99.2vw;
   min-height: 100vh;
   background-color: #CE2829;
+
   display: flex;
-  justify-content: center;
-  padding-top: 0; 
-  margin-top: 0;
+  flex-direction: column;
+  align-items: center;
+
+  color: white;
 `;
 
+/* HEADER */
 export const HeaderBar = styled.div`
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 8rem;
-    gap: 10rem;
+  margin-top: 3rem;
+  text-align: center;
 
-    h1 {
-        font-size: 3rem;
+  h1 {
+    font-size: 2.3rem;
+    font-weight: 700;
+    margin-bottom: 5rem;
+  }
+`;
+
+export const SuccessSub = styled.p`
+  color: #f6c85f;
+  font-size: 1.3rem;
+  margin-top: 0.5rem;
+`;
+
+export const SuccessTitle = styled.h2`
+  margin-top: 1rem;
+  font-size: 6rem;
+  font-weight: 300;
+  wdith: 30rem;
+`;
+
+export const SuccessLine = styled.div`
+  margin: 1rem auto;
+  margin-top: 5rem;
+  width: 38rem;
+  height: 3px;
+  background-color: white;
+  opacity: 0.5;
+`;
+
+/* CONTENT */
+export const ContentBox = styled.div`
+  text-align: center;
+  margin-top: 2rem;
+`;
+
+export const OrderInfo = styled.div`
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+
+  text-align: left;      /* ← YENİ EKLEDİK */
+  width: 320px;          /* ← sağlıklı hizalama için eklendi */
+  margin-left: auto;     
+  margin-right: auto;    /* ortada durur ama yazılar soldadır */
+`;
+
+export const OrderRow = styled.p`
+  margin: 4px 0;
+`;
+
+/* SUMMARY CARD */
+export const SummaryCard = styled.div`
+  margin: 2rem auto;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  width: 350px;     /* 🔥 KUTU GENİŞLEDİ */
+  padding: 1.5rem;  /* Biraz daha iç boşluk */
+  text-align: left;
+
+  h4 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+`;
+
+export const SummaryRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: ${(p) => (p.isTotal ? "12px" : "4px")};
+  padding-top: ${(p) => (p.isTotal ? "12px" : "0")};
+  border-top: ${(p) => (p.isTotal ? "1px solid white" : "none")};
+`;
+
+/* FOOTER */
+export const FooterWrapper = styled.footer`
+  background-color: #292929;
+  margin-top: 4rem;
+  margin-bottom: 0rem;
+  padding-top: 2rem;
+  width: 100%;
+`;
+
+export const FooterTop = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 9rem;
+  padding-bottom: 3rem;
+  border-bottom: 2px solid rgb(75, 74, 74);
+`;
+
+export const FooterLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+
+  img {
+    width: 12rem;
+  }
+`;
+
+export const FooterInfoRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  img {
+    width: 2.2rem;
+  }
+
+  p {
+    color: white;
+    font-size: 1.1rem;
+  }
+`;
+
+export const FooterMiddle = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h3 {
+    color: white;
+    font-size: 1.5rem;
+  }
+
+  p {
+    color: white;
+    transition: 0.3s;
+
+    &:hover {
+      color: #c5c5c5;
     }
-    
-    p {
-        font-size: 5rem;
-        width: 50rem;
-        text-align: center;
-        line-height: 6rem;
+  }
+`;
+
+export const FooterRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h3 {
+    color: white;
+    font-size: 1.5rem;
+  }
+`;
+
+export const FooterImages = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .row {
+    display: flex;
+    gap: 1rem;
+
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
     }
+  }
+`;
+
+export const FooterBottom = styled.div`
+  max-width: 1200px;
+  margin: 2rem auto;
+  margin-bottom: 0;
+  padding-bottom: 2rem;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  color: white;
+
+  p {
+    margin-left: 3rem;
+  }
+
+  i {
+    margin-right: 3rem;
+    font-size: 1.5rem;
+  }
 `;

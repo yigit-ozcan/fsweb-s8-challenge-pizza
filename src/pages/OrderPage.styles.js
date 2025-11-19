@@ -374,6 +374,7 @@ export const SubmitButton = styled.button`
 /* =========================
       FOOTER
 ========================= */
+
 export const FooterWrapper = styled.footer`
   background-color: #292929;
   margin-top: 4rem;

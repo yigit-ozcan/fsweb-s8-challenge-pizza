@@ -6,6 +6,8 @@ import {
   PageContainer,
   PageWrapper,
   HeaderBar,
+  HeroImage,
+  ProductSection,
   ProductBox,
   FormCard,
   Section,
@@ -26,17 +28,41 @@ import {
   SummaryRow,
   SummaryLabel,
   SummaryValue,
+  BottomRow,
+  FooterWrapper,
+  FooterTop,
+  FooterLeft,
+  FooterInfoRow,
+  FooterMiddle,
+  FooterRight,
+  FooterImages,
+  FooterBottom
 } from "./OrderPage.styles";
 
-const OrderPage = () => {
+const OrderPage = ({ handleOrder }) => {
   const [boyut, setBoyut] = useState("");
   const [hamur, setHamur] = useState("");
   const [malzemeler, setMalzemeler] = useState([]);
   const [isim, setIsim] = useState("");
   const [not, setNot] = useState("");
   const [adet, setAdet] = useState(1);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+
+  // ✅ FİYAT HESAPLAMA
+  const hesaplaFiyat = () => {
+    const BASE_PRICE = 85.50;
+    const MALZEME_FIYATI = 5;
+
+    const secimUcreti = malzemeler.length * MALZEME_FIYATI;
+    const araToplam = BASE_PRICE + secimUcreti;
+    const toplam = araToplam * adet;
+
+    return { secimUcreti, toplam };
+  };
+
+  const { secimUcreti, toplam } = hesaplaFiyat();
 
   const SECENEKLER = [
     "Pepperoni", "Sosis", "Kanada Jambonu", "Tavuk Izgara", "Soğan",
@@ -53,10 +79,12 @@ const OrderPage = () => {
     axios
       .post("https://jsonplaceholder.typicode.com/posts", siparis)
       .then((res) => {
-        console.log("Sipariş Yanıtı:", res.data);
-        navigate("/success", { state: res.data });
+        handleOrder(res.data);
+        navigate("/success");
       })
-      .catch((err) => console.log(err));
+      .catch(() => {
+        setError("Bağlantı hatası, lütfen tekrar deneyin.");
+      });
   };
 
   const handleMalzemeler = (e) => {
@@ -78,40 +106,40 @@ const OrderPage = () => {
     <PageContainer>
       <PageWrapper>
 
-        {/* ---- HEADER ---- */}
+        {/* HEADER */}
         <HeaderBar>
           <div className="logo">Teknolojik Yemekler</div>
-
-          <div className="breadcrumb">
-            <span>Anasayfa</span> &nbsp;-&nbsp; <strong>Sipariş Oluştur</strong>
-          </div>
         </HeaderBar>
 
-        {/* ---- ÜRÜN BİLGİ ---- */}
-        <ProductBox>
-          <h2>Position Absolute Acı Pizza</h2>
+        {/* ÜST KUTU */}
+        <ProductSection>
+          <HeroImage src="/images/iteration-2-images/pictures/form-banner.png" alt="pizza" />
 
-          <div className="info-row">
-            <span className="price">85.50₺</span>
-
-            <div className="rating-box">
-              <span>4.9</span>
-              <span>(200)</span>
+          <ProductBox>
+            <div className="breadcrumb">
+              <span>Anasayfa</span> - <strong>Sipariş Oluştur</strong>
             </div>
-          </div>
 
-          <p>
-            Frontend Dev olarak hala position:absolute kullanıyorsan bu çok acı pizza tam sana göre.
-            Pizza; domates, peynir ve genellikle çeşitli diğer malzemelerle kaplanmış,
-            daha sonra geleneksel olarak odun ateşinde bir fırında yüksek sıcaklıkta pişirilen,
-            genellikle yuvarlak, düzleştirilmiş mayalı buğday bazlı hamurdan oluşan İtalyan kökenli
-            lezzetli bir yemektir. Küçük bir pizzaya bazen pizzetta denir.
-          </p>
-        </ProductBox>
+            <h2>Position Absolute Acı Pizza</h2>
 
-        {/* ---- FORM ---- */}
+            <div className="info-row">
+              <span className="price">85.50₺</span>
+              <div className="rating-box">
+                <span>4.9</span>
+                <span>(200)</span>
+              </div>
+            </div>
+
+            <p>
+              Frontend Dev olarak hala position:absolute kullanıyorsan bu çok acı pizza tam sana göre...
+            </p>
+          </ProductBox>
+        </ProductSection>
+
+        {/* FORM */}
         <FormCard onSubmit={handleSubmit}>
 
+          {/* BOYUT + HAMUR */}
           <SectionRow>
             <Section>
               <Title>Boyut Seç <span>*</span></Title>
@@ -123,7 +151,8 @@ const OrderPage = () => {
                     value="Küçük"
                     checked={boyut === "Küçük"}
                     onChange={(e) => setBoyut(e.target.value)}
-                  /> Küçük
+                  />
+                  <span>K</span>
                 </label>
 
                 <label>
@@ -133,7 +162,8 @@ const OrderPage = () => {
                     value="Orta"
                     checked={boyut === "Orta"}
                     onChange={(e) => setBoyut(e.target.value)}
-                  /> Orta
+                  />
+                  <span>M</span>
                 </label>
 
                 <label>
@@ -143,7 +173,8 @@ const OrderPage = () => {
                     value="Büyük"
                     checked={boyut === "Büyük"}
                     onChange={(e) => setBoyut(e.target.value)}
-                  /> Büyük
+                  />
+                  <span>L</span>
                 </label>
               </OptionGroup>
             </Section>
@@ -151,7 +182,7 @@ const OrderPage = () => {
             <Section>
               <Title>Hamur Seç <span>*</span></Title>
               <SelectBox value={hamur} onChange={(e) => setHamur(e.target.value)}>
-                <option value="">Hamur seçiniz</option>
+                <option value="">—Hamur Kalınlığı Seç—</option>
                 <option value="ince">İnce</option>
                 <option value="orta">Orta</option>
                 <option value="kalın">Kalın</option>
@@ -159,9 +190,10 @@ const OrderPage = () => {
             </Section>
           </SectionRow>
 
+          {/* MALZEMELER */}
           <Section>
             <Title>Ek Malzemeler</Title>
-            <InfoText>En az 4, en fazla 10 tane seçebilirsiniz.</InfoText>
+            <InfoText>En Fazla 10 malzeme seçebilirsiniz. En az 4.</InfoText>
 
             <CheckboxGrid>
               {SECENEKLER.map((item) => (
@@ -171,17 +203,15 @@ const OrderPage = () => {
                     value={item}
                     checked={malzemeler.includes(item)}
                     onChange={handleMalzemeler}
-                  />{" "}
+                  />
+                  <span></span>
                   {item}
                 </label>
               ))}
             </CheckboxGrid>
           </Section>
 
-          <Section style={{ display: "none" }}>
-            <InputBox type="text" value={isim} onChange={(e) => setIsim(e.target.value)} />
-          </Section>
-
+          {/* NOT */}
           <Section>
             <Title>Sipariş Notu</Title>
             <TextArea
@@ -191,15 +221,14 @@ const OrderPage = () => {
             />
           </Section>
 
-          <SectionRow>
+          {/* ADET + ÖZET */}
+          <BottomRow>
 
-            <Section>
-              <QuantityWrapper>
-                <QuantityButton type="button" onClick={() => setAdet(Math.max(1, adet - 1))}>-</QuantityButton>
-                <QuantityValue>{adet}</QuantityValue>
-                <QuantityButton type="button" onClick={() => setAdet(adet + 1)}>+</QuantityButton>
-              </QuantityWrapper>
-            </Section>
+            <QuantityWrapper>
+              <QuantityButton type="button" onClick={() => setAdet(Math.max(1, adet - 1))}>-</QuantityButton>
+              <QuantityValue>{adet}</QuantityValue>
+              <QuantityButton type="button" onClick={() => setAdet(adet + 1)}>+</QuantityButton>
+            </QuantityWrapper>
 
             <SummaryCard>
               <SummaryContent>
@@ -207,23 +236,85 @@ const OrderPage = () => {
 
                 <SummaryRow>
                   <SummaryLabel>Seçimler</SummaryLabel>
-                  <SummaryValue>25.00₺</SummaryValue>
+                  <SummaryValue>{secimUcreti.toFixed(2)}₺</SummaryValue>
                 </SummaryRow>
 
                 <SummaryRow isTotal>
                   <SummaryLabel isTotal>Toplam</SummaryLabel>
-                  <SummaryValue isTotal>110.50₺</SummaryValue>
+                  <SummaryValue isTotal>{toplam.toFixed(2)}₺</SummaryValue>
                 </SummaryRow>
               </SummaryContent>
+
+              {error && <p style={{ color: "red" }}>{error}</p>}
 
               <SubmitButton disabled={!isValidForm} type="submit">
                 SİPARİŞ VER
               </SubmitButton>
             </SummaryCard>
 
-          </SectionRow>
+          </BottomRow>
 
         </FormCard>
+
+        {/* FOOTER */}
+        <FooterWrapper>
+          <FooterTop>
+
+            <FooterLeft>
+              <img src="/images/iteration-2-images/footer/logo-footer.svg" alt="" />
+
+              <FooterInfoRow>
+                <img src="/images/iteration-2-images/footer/icons/icon-1.png" alt="" />
+                <p>341 Londonderry Road, Istanbul Türkiye</p>
+              </FooterInfoRow>
+
+              <FooterInfoRow>
+                <img src="/images/iteration-2-images/footer/icons/icon-2.png" alt="" />
+                <p>aciktim@teknolojikyemekler.com</p>
+              </FooterInfoRow>
+
+              <FooterInfoRow>
+                <img src="/images/iteration-2-images/footer/icons/icon-3.png" alt="" />
+                <p>+90 216 123 45 67</p>
+              </FooterInfoRow>
+            </FooterLeft>
+
+            <FooterMiddle>
+              <h3>Hot Menu</h3>
+              <p>Terminal Pizza</p>
+              <p>5 Kişilik Hackathlon Pizza</p>
+              <p>useEffect Tavuklu Pizza</p>
+              <p>Beyaz Console Frosty</p>
+              <p>Testler Geçti Mutlu Burger</p>
+              <p>Position Absolute Acı Burger</p>
+            </FooterMiddle>
+
+            <FooterRight>
+              <h3>Instagram</h3>
+
+              <FooterImages>
+                <div className="row">
+                  <img src="/images/iteration-2-images/footer/insta/li-0.png" alt="" />
+                  <img src="/images/iteration-2-images/footer/insta/li-1.png" alt="" />
+                  <img src="/images/iteration-2-images/footer/insta/li-2.png" alt="" />
+                </div>
+                <div className="row">
+                  <img src="/images/iteration-2-images/footer/insta/li-3.png" alt="" />
+                  <img src="/images/iteration-2-images/footer/insta/li-4.png" alt="" />
+                  <img src="/images/iteration-2-images/footer/insta/li-5.png" alt="" />
+                </div>
+              </FooterImages>
+            </FooterRight>
+
+          </FooterTop>
+
+          <FooterBottom>
+            <p>© 2023 Teknolojik Yemekler.</p>
+            <i class="fa-brands fa-twitter"></i>
+          </FooterBottom>
+
+        </FooterWrapper>
+
       </PageWrapper>
     </PageContainer>
   );
